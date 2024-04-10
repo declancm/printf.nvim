@@ -89,7 +89,7 @@ M.print_var = function(opts)
 end
 
 --- Delete all generated lines in the current file by searching for the signature.
-M.clear = function()
+M.clean = function()
 	local line_count = vim.api.nvim_buf_line_count(0)
 	for i = line_count, 1, -1 do
 		local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
