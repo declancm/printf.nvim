@@ -91,9 +91,10 @@ end
 --- Delete all generated lines in the current file by searching for the signature.
 M.clean = function()
 	local line_count = vim.api.nvim_buf_line_count(0)
+	local escaped_signature = string.gsub(autogen_signature, '%-', '%%-')
 	for i = line_count, 1, -1 do
 		local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
-		if string.find(line, string.gsub(autogen_signature, '%-', '%%-')) then
+		if string.find(line, escaped_signature) then
 			vim.api.nvim_buf_set_lines(0, i - 1, i, false, {})
 		end
 	end
