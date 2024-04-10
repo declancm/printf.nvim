@@ -4,46 +4,52 @@ local M = {}
 --- @param type string
 --- @return string
 M.get_type_format_specifier = function(type)
-	-- Check if unsigned.
-	local unsigned = string.match(type, 'unsigned (.*)') and true or false
-	if unsigned then
-		type = string.sub(type, #'unsigned ' + 1)
-	end
-
 	-- Return format specifier.
 	if not type or type == '' then
 		return ''
 	elseif type == '_Bool' or type == 'bool' then
 		return '"%d"'
-	elseif type == 'char' then
-		return '"%c"'
-	elseif type == 'short' then
-		return unsigned and '"%u"' or '"%d"'
-	elseif type == 'int' then
-		return unsigned and '"%u"' or '"%d"'
-	elseif type == 'long' then
-		return unsigned and '"%lu"' or '"%ld"'
-	elseif type == 'long long' then
-		return unsigned and '"%llu"' or '"%lld"'
-	elseif type == 'float' then
-		return '"%f"'
-	elseif type == 'double' then
-		return '"%f"'
-	elseif type == 'long double' then
-		return '"%Lf"'
-	elseif string.match(type, '^(char[%d+])$') or type == 'char *' then
+	elseif string.match(type, '^char[%d+]$') or type == 'char *' then
 		return '"%s"'
-	elseif string.match(type, '^(u?int%d+_t)$') then
-		local size = string.match(type, '^u?int(%d+)_t$')
-		if type[1] == 'u' then
-			return '"%" PRIu' .. size
-		else
-			return '"%" PRIi' .. size
-		end
-	elseif string.match(type, '^(.* %*)$') then
+	elseif string.match(type, '^.* %*$') then
 		return '"%u"'
+	elseif string.match(type, '^u?int%d+_t$') then
+		local size = string.match(type, '^u?int(%d+)_t$')
+		return '"%" PRI' .. string.sub(type, 1, 1) .. size
 	else
-		return ''
+		-- Check if signed or unsigned.
+		local count
+		type, count = string.gsub(type, '^unsigned ', '', 1)
+		local unsigned = count > 0
+		type, count = string.gsub(type, '^signed ', '', 1)
+		local signed = count > 0
+
+		if type == 'char' then
+			if unsigned then
+				return '"%hhu"'
+			elseif signed then
+				return '"%hhd"'
+			else
+				return '"%c"'
+			end
+		elseif type == 'short' then
+			return unsigned and '"%hu"' or '"%hd"'
+		elseif type == 'int' then
+			return unsigned and '"%u"' or '"%d"'
+		elseif type == 'long' then
+			return unsigned and '"%lu"' or '"%ld"'
+		elseif type == 'long long' then
+			return unsigned and '"%llu"' or '"%lld"'
+		elseif type == 'float' then
+			return '"%f"'
+		elseif type == 'double' then
+			return '"%f"'
+		elseif type == 'long double' then
+			return '"%Lf"'
+		else
+			-- Unknown type.
+			return ''
+		end
 	end
 end
 
