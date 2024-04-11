@@ -66,17 +66,21 @@ M.print_var = function(opts)
 	local text
 
 	local name = require('printf.name').get_var_qualified_name()
-	if not name or name == '' then
+	if not name then
 		print('A valid variable name was not found')
 		return
 	end
 
 	if file_type == 'c' then
 		local type = require('printf.type').get_var_type()
+		if not type then
+			print('Failed to retrieve the variable type')
+			return
+		end
 		local format = require('printf.format').get_type_format_specifier(type)
-		if not format or format == '' then
+		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
-			print("A format specifier wasn't found")
+			print('A format specifier was not found')
 			return
 		end
 		text = 'printf("' .. name .. ': " ' .. format .. ' "\\n", ' .. name .. '); // ' .. autogen_signature

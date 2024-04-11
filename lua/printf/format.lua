@@ -2,11 +2,11 @@ local M = {}
 
 --- Get the C language format specifier for the provided type.
 --- @param type string
---- @return string
+--- @return string|nil
 M.get_type_format_specifier = function(type)
 	-- Return format specifier.
-	if not type or type == '' then
-		return ''
+	if not type then
+		return nil
 	elseif type == '_Bool' or type == 'bool' then
 		return '"%d"'
 	elseif string.match(type, '^char[%d+]$') or type == 'char *' then
@@ -48,7 +48,7 @@ M.get_type_format_specifier = function(type)
 			return '"%Lf"'
 		else
 			-- Unknown type.
-			return ''
+			return nil
 		end
 	end
 end
