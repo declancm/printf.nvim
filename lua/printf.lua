@@ -34,7 +34,7 @@ M.print_line = function(opts)
 	if file_type == 'c' then
 		text = 'printf("line: %d\\n", __LINE__); // ' .. autogen_signature
 	else
-		print('This file type is not supported')
+		vim.notify('This file type is not supported', vim.log.levels.WARN)
 		return
 	end
 
@@ -51,7 +51,7 @@ M.print_func = function(opts)
 	if file_type == 'c' then
 		text = 'printf("func: %s\\n", __func__); // ' .. autogen_signature
 	else
-		print('This file type is not supported')
+		vim.notify('This file type is not supported', vim.log.levels.WARN)
 		return
 	end
 
@@ -67,25 +67,25 @@ M.print_var = function(opts)
 
 	local name = require('printf.name').get_var_qualified_name()
 	if not name then
-		print('A valid variable name was not found')
+		vim.notify('A valid variable name was not found', vim.log.levels.WARN)
 		return
 	end
 
 	if file_type == 'c' then
 		local type = require('printf.type').get_var_type()
 		if not type then
-			print('Failed to retrieve the variable type')
+			vim.notify('Failed to get the variable type', vim.log.levels.ERROR)
 			return
 		end
 		local format = require('printf.format').get_type_format_specifier(type)
 		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
-			print('A format specifier was not found')
+			vim.notify('The variable type is not supported', vim.log.levels.WARN)
 			return
 		end
 		text = 'printf("' .. name .. ': " ' .. format .. ' "\\n", ' .. name .. '); // ' .. autogen_signature
 	else
-		print('This file type is not supported')
+		vim.notify('This file type is not supported', vim.log.levels.WARN)
 		return
 	end
 
