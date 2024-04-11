@@ -71,7 +71,7 @@ M.print_var = function(opts)
 		return
 	end
 
-	if file_type == 'c' then
+	if file_type == 'c' or file_type == 'cpp' then
 		local type = require('printf.type').get_var_type()
 		if not type then
 			vim.notify('Failed to get the variable type', vim.log.levels.ERROR)
