@@ -8,7 +8,7 @@ M.get_type_format_specifier = function(type)
 		return nil
 	end
 
-	-- Remove keywords that don't have an affect on the type format specifier.
+	-- Remove keywords that don't have an effect on the type format specifier.
 	type = type:gsub('volatile ', '')
 	type = type:gsub('extern ', '')
 	type = type:gsub('static ', '')
@@ -19,7 +19,7 @@ M.get_type_format_specifier = function(type)
 		return '"%d"'
 	elseif type:match('^char[%d+]$') or type == 'char *' then
 		return '"%s"'
-	elseif type:match('^.* %*$') then
+	elseif type:match('.* %*$') then
 		return '"%u"'
 	elseif type:match('^u?int%d+_t$') then
 		local size = type:match('^u?int(%d+)_t$')
