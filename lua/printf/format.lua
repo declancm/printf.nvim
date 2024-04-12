@@ -4,24 +4,32 @@ local M = {}
 --- @param type string
 --- @return string|nil
 M.get_type_format_specifier = function(type)
-	-- Return format specifier.
 	if not type then
 		return nil
-	elseif type == '_Bool' or type == 'bool' then
+	end
+
+	-- Remove keywords that don't have an affect on the type format specifier.
+	type = type:gsub('volatile ', '')
+	type = type:gsub('extern ', '')
+	type = type:gsub('static ', '')
+	type = type:gsub('const ', '')
+
+	-- Return the format specifier.
+	if type == '_Bool' or type == 'bool' then
 		return '"%d"'
-	elseif string.match(type, '^char[%d+]$') or type == 'char *' then
+	elseif type:match('^char[%d+]$') or type == 'char *' then
 		return '"%s"'
-	elseif string.match(type, '^.* %*$') then
+	elseif type:match('^.* %*$') then
 		return '"%u"'
-	elseif string.match(type, '^u?int%d+_t$') then
-		local size = string.match(type, '^u?int(%d+)_t$')
-		return '"%" PRI' .. string.sub(type, 1, 1) .. size
+	elseif type:match('^u?int%d+_t$') then
+		local size = type:match('^u?int(%d+)_t$')
+		return '"%" PRI' .. type:sub(1, 1) .. size
 	else
 		-- Check if signed or unsigned.
 		local count
-		type, count = string.gsub(type, '^unsigned ', '', 1)
+		type, count = type:gsub('unsigned ', '', 1)
 		local unsigned = count > 0
-		type, count = string.gsub(type, '^signed ', '', 1)
+		type, count = type:gsub('signed ', '', 1)
 		local signed = count > 0
 
 		if type == 'char' then
