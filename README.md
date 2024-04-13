@@ -1,6 +1,5 @@
-# printf.nvim
-
 <div align="center">
+    <h1>printf.nvim</h1>
     <h5>printf generator tool for Neovim powered by tree-sitter and LSP</h5>
 </div>
 
