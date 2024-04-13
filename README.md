@@ -3,18 +3,17 @@
     <h5>printf generator tool for Neovim powered by tree-sitter and LSP</h5>
 </div>
 
-## Disclaimer
-
-This project is a work-in-progress - please expect breaking changes!
-
-## Demo
-
 ![printf.nvim](assets/printf_demo.gif "print_var demo")
+
+Print debugging is a valuable debugging technique, especially for situations where a debugger might be too timing intrusive.
+This plugin automatically generates print statements which understand the code syntax and know what format specifiers to use.
+
+*Note: This project is a work-in-progress - please expect breaking changes!*
 
 ## Features
 
-- Full qualified variable name parsing using tree-sitter
-- Format specifier detection for standard C types using LSP
+- Full qualified variable name parsing
+- Format specifier detection for standard types
 
 ## Requirements
 
