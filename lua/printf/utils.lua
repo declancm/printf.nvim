@@ -23,7 +23,7 @@ M.insert_line = function(text, below)
 	end
 
 	-- TODO: Use treesitter to get the correct indentation.
-	local indent = string.match(vim.api.nvim_get_current_line(), '^(%s*)')
+	local indent = vim.api.nvim_get_current_line():match('^(%s*)')
 	vim.api.nvim_buf_set_lines(0, row, row, false, { indent .. text })
 end
 
