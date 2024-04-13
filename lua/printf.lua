@@ -77,13 +77,14 @@ M.print_var = function(opts)
 			vim.notify('Failed to get the variable type', vim.log.levels.ERROR)
 			return
 		end
-		local format = require('printf.format').get_type_format_specifier(type)
+
+		local format, cast = require('printf.format').get_type_format_specifier(type)
 		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
 			vim.notify('The variable type is not supported', vim.log.levels.WARN)
 			return
 		end
-		text = 'printf("' .. name .. ': " ' .. format .. ' "\\n", ' .. name .. '); // ' .. autogen_signature
+		text = 'printf("' .. name .. ': " ' .. format .. ' "\\n", ' .. (cast or '') .. name .. '); // ' .. autogen_signature
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
 		return

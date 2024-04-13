@@ -3,6 +3,7 @@ local M = {}
 --- Get the C language format specifier for the provided type.
 --- @param type string
 --- @return string|nil
+--- @return string|nil
 M.get_type_format_specifier = function(type)
 	if not type then
 		return nil
@@ -30,6 +31,8 @@ M.get_type_format_specifier = function(type)
 		return '"%" PRIdPTR'
 	elseif type == 'uinptr_t' then
 		return '"%" PRIuPTR'
+	elseif type:match(' %*$') then
+		return '"%q"', '(void *)'
 	else
 		-- Check if signed or unsigned.
 		local count
