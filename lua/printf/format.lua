@@ -44,13 +44,13 @@ M.get_type_format_specifier = function(type)
 			else
 				return '"%c"'
 			end
-		elseif type == 'short' then
+		elseif type == 'short' or type == 'short int' then
 			return unsigned and '"%hu"' or '"%hd"'
 		elseif type == 'int' then
 			return unsigned and '"%u"' or '"%d"'
-		elseif type == 'long' then
+		elseif type == 'long' or type == 'long int' then
 			return unsigned and '"%lu"' or '"%ld"'
-		elseif type == 'long long' then
+		elseif type == 'long long' or type == 'long long int' then
 			return unsigned and '"%llu"' or '"%lld"'
 		elseif type == 'float' then
 			return '"%f"'
