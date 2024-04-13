@@ -17,22 +17,22 @@ M.get_type_format_specifier = function(type)
 
 	-- Return the format specifier.
 	if type == '_Bool' or type == 'bool' then
-		return '"%d"'
+		return 'd'
 	elseif type:match('^char%[%d+%]$') or type == 'char *' then
-		return '"%s"'
+		return 's'
 	elseif type == 'size_t' then
-		return '"%zu"'
+		return 'zu'
 	elseif type == 'ssize_t' then
-		return '"%zd"'
+		return 'zd'
 	elseif type:match('^u?int%d+_t$') then
 		local size = type:match('^u?int(%d+)_t$')
-		return '"%" PRI' .. type:sub(1, 1) .. size
+		return '" PRI' .. type:sub(1, 1) .. size .. ' "'
 	elseif type == 'inptr_t' then
-		return '"%" PRIdPTR'
+		return '" PRIdPTR "'
 	elseif type == 'uinptr_t' then
-		return '"%" PRIuPTR'
+		return '" PRIuPTR "'
 	elseif type:match(' %*$') then
-		return '"%q"', '(void *)'
+		return 'q', '(void *)'
 	else
 		-- Check if signed or unsigned.
 		local count
@@ -43,26 +43,26 @@ M.get_type_format_specifier = function(type)
 
 		if type == 'char' then
 			if unsigned then
-				return '"%hhu"'
+				return 'hhu'
 			elseif signed then
-				return '"%hhd"'
+				return 'hhd'
 			else
-				return '"%c"'
+				return 'c'
 			end
 		elseif type == 'short' or type == 'short int' then
-			return unsigned and '"%hu"' or '"%hd"'
+			return unsigned and 'hu' or 'hd'
 		elseif type == 'int' then
-			return unsigned and '"%u"' or '"%d"'
+			return unsigned and 'u' or 'd'
 		elseif type == 'long' or type == 'long int' then
-			return unsigned and '"%lu"' or '"%ld"'
+			return unsigned and 'lu' or 'ld'
 		elseif type == 'long long' or type == 'long long int' then
-			return unsigned and '"%llu"' or '"%lld"'
+			return unsigned and 'llu' or 'lld'
 		elseif type == 'float' then
-			return '"%f"'
+			return 'f'
 		elseif type == 'double' then
-			return '"%f"'
+			return 'f'
 		elseif type == 'long double' then
-			return '"%Lf"'
+			return 'Lf'
 		else
 			-- Unknown type.
 			return nil

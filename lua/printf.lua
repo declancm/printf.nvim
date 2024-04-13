@@ -84,7 +84,7 @@ M.print_var = function(opts)
 			vim.notify('The variable type is not supported', vim.log.levels.WARN)
 			return
 		end
-		text = 'printf("' .. name .. ': " ' .. format .. ' "\\n", ' .. (cast or '') .. name .. '); // ' .. autogen_signature
+		text = 'printf("' .. name .. ': %' .. format .. '\\n", ' .. (cast or '') .. name .. '); // ' .. autogen_signature
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
 		return
