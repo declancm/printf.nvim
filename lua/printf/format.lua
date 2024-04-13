@@ -19,9 +19,9 @@ M.get_type_format_specifier = function(type)
 		return '"%d"'
 	elseif type:match('^char%[%d+%]$') or type == 'char *' then
 		return '"%s"'
-	elseif type:match('^size_t$') then
+	elseif type == 'size_t' then
 		return '"%zu"'
-	elseif type:match('^ssize_t$') then
+	elseif type == 'ssize_t' then
 		return '"%zd"'
 	elseif type:match('^u?int%d+_t$') then
 		local size = type:match('^u?int(%d+)_t$')
