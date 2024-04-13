@@ -26,6 +26,10 @@ M.get_type_format_specifier = function(type)
 	elseif type:match('^u?int%d+_t$') then
 		local size = type:match('^u?int(%d+)_t$')
 		return '"%" PRI' .. type:sub(1, 1) .. size
+	elseif type == 'inptr_t' then
+		return '"%" PRIdPTR'
+	elseif type == 'uinptr_t' then
+		return '"%" PRIuPTR'
 	else
 		-- Check if signed or unsigned.
 		local count
