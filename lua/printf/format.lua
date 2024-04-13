@@ -17,7 +17,7 @@ M.get_type_format_specifier = function(type)
 	-- Return the format specifier.
 	if type == '_Bool' or type == 'bool' then
 		return '"%d"'
-	elseif type:match('^char[%d+]$') or type == 'char *' then
+	elseif type:match('^char%[%d+%]$') or type == 'char *' then
 		return '"%s"'
 	elseif type:match('.* %*$') then
 		return '"%u"'
