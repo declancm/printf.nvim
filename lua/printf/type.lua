@@ -22,7 +22,7 @@ end
 M.get_var_type = function()
 	-- Get the attached language server name.
 	local lsp_clients = vim.lsp.get_clients()
-	if not lsp_clients or not lsp_clients[1] then
+	if not lsp_clients or not next(lsp_clients) then
 		return nil
 	end
 	local ls_name = lsp_clients[1].name
@@ -30,7 +30,7 @@ M.get_var_type = function()
 	-- Get the LSP hover method since that has type data.
 	local params = vim.lsp.util.make_position_params(vim.api.nvim_get_current_win())
 	local response = vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'textDocument/hover', params)
-	if not response or not response[1] then
+	if not response or not next(response) then
 		return nil
 	end
 	local value = response[1].result.contents.value
