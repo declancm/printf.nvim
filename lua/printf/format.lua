@@ -21,6 +21,10 @@ M.get_type_format_specifier = function(type)
 		return '"%s"'
 	elseif type:match('.* %*$') then
 		return '"%u"'
+	elseif type:match('^size_t$') then
+		return '"%zu"'
+	elseif type:match('^ssize_t$') then
+		return '"%zd"'
 	elseif type:match('^u?int%d+_t$') then
 		local size = type:match('^u?int(%d+)_t$')
 		return '"%" PRI' .. type:sub(1, 1) .. size
