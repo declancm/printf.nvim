@@ -7,6 +7,10 @@
 
 This project is a work-in-progress - please expect breaking changes!
 
+## Demo
+
+![printf.nvim](assets/printf_demo.gif "print_var demo")
+
 ## Features
 
 - Full qualified variable name parsing using tree-sitter
