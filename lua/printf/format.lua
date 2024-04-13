@@ -19,8 +19,6 @@ M.get_type_format_specifier = function(type)
 		return '"%d"'
 	elseif type:match('^char%[%d+%]$') or type == 'char *' then
 		return '"%s"'
-	elseif type:match('.* %*$') then
-		return '"%u"'
 	elseif type:match('^size_t$') then
 		return '"%zu"'
 	elseif type:match('^ssize_t$') then
