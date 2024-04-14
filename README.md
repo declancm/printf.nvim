@@ -1,6 +1,6 @@
 <div align="center">
     <h1>printf.nvim</h1>
-    <h5>printf generator tool for Neovim powered by tree-sitter and LSP</h5>
+    <h5>A syntax-aware print debugging statement generator for C/C++</h5>
 </div>
 
 ![printf.nvim](assets/printf_demo.gif "print_var demo")
