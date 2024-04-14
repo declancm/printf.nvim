@@ -62,16 +62,20 @@ end
 --- @param opts PrintfOptions|nil
 M.print_var = function(opts)
 	opts = extend_options(opts)
-	local file_type = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+	local filetype = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 	local text
 
-	local name = require('printf.name').get_var_qualified_name()
-	if not name then
-		vim.notify('A valid variable name was not found', vim.log.levels.WARN)
-		return
+	if not require('nvim-treesitter.parsers').has_parser() then
+		vim.notify('A tree-sitter parser is required', vim.log.levels.ERROR)
 	end
 
-	if file_type == 'c' or file_type == 'cpp' then
+	if filetype == 'c' or filetype == 'cpp' then
+		local name = require('printf.name').get_var_qualified_name()
+		if not name then
+			vim.notify('A valid variable name was not found', vim.log.levels.WARN)
+			return
+		end
+
 		local type = require('printf.type').get_var_type()
 		if not type then
 			vim.notify('Failed to get the variable type', vim.log.levels.ERROR)

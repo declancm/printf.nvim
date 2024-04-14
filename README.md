@@ -26,7 +26,8 @@ This plugin automatically generates print statements which understand the code s
 
 ```lua
 {
-    'declancm/printf.nvim'
+    'declancm/printf.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' }
 }
 ```
 
