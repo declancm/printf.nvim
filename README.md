@@ -34,10 +34,10 @@ This plugin automatically generates print statements which understand the code s
 
 ```lua
 local printf = require('printf')
-vim.keymap.set('n', '<leader>dv', printf.print_var, {})
-vim.keymap.set('n', '<leader>dl', printf.print_line, {})
-vim.keymap.set('n', '<leader>df', printf.print_fun, {})
-vim.keymap.set('n', '<leader>dc', printf.clean, {})
+vim.keymap.set('n', '<leader>dv', printf.print_var, {})  -- Print the variable under the cursor.
+vim.keymap.set('n', '<leader>dl', printf.print_line, {}) -- Print the enclosed function name.
+vim.keymap.set('n', '<leader>df', printf.print_fun, {})  -- Print the line number.
+vim.keymap.set('n', '<leader>dc', printf.clean, {})      -- Remove all the generated statements.
 ```
 
 ## Examples
