@@ -9,9 +9,7 @@ local get_type_from_hover = function(ls_name, hover_value)
 
 	if ls_name == 'clangd' then
 		type = hover_value:match('Type: `(.-)`') or ''
-
-		-- Some types like uint8_t have descriptions in braces so cut it off.
-		type = type:match('^(.-) %(.*%)') or type
+		type = type:match(' %(aka (.*)%)') or type
 	end
 
 	return type
