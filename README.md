@@ -5,15 +5,14 @@
 
 ![printf.nvim](assets/printf_demo.gif "print_var demo")
 
-Print debugging is a valuable debugging technique, especially for situations where a debugger might be too timing intrusive.
-This plugin automatically generates print statements which understand the code syntax and know what format specifiers to use.
-
 *Note: This project is a work-in-progress - please expect breaking changes!*
 
 ## Features
 
-- Full qualified variable name parsing
-- Format specifier detection for standard types
+- Generates print statements for printing line numbers, function names and variable values
+- Can instantly remove all generated print statements
+- Syntax-aware - knows to print `object->member`, not just `member`
+- Automatically inserts format specifiers for all standard C types
 
 ## Requirements
 
