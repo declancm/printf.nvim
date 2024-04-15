@@ -11,7 +11,7 @@
 
 - Generates print statements for printing line numbers, function names and variable values
 - Can instantly remove all generated print statements
-- Syntax-aware - knows to print `object->member`, not just `member`
+- Syntax and context aware - doesn't just use the word under the cursor to print a variable
 - Automatically inserts format specifiers for all standard C types
 
 ## Requirements
