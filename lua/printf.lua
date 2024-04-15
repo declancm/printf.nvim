@@ -67,6 +67,7 @@ M.print_var = function(opts)
 
 	if not require('nvim-treesitter.parsers').has_parser() then
 		vim.notify('A tree-sitter parser is required', vim.log.levels.ERROR)
+		return
 	end
 
 	if filetype == 'c' or filetype == 'cpp' then
