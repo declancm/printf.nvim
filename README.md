@@ -36,7 +36,7 @@
 local printf = require('printf')
 vim.keymap.set('n', '<leader>dv', printf.print_var, {})  -- Print the variable under the cursor
 vim.keymap.set('n', '<leader>dl', printf.print_line, {}) -- Print the line number
-vim.keymap.set('n', '<leader>df', printf.print_fun, {})  -- Print the enclosed function name
+vim.keymap.set('n', '<leader>df', printf.print_func, {}) -- Print the enclosed function name
 vim.keymap.set('n', '<leader>dc', printf.clean, {})      -- Remove all the generated statements
 ```
 
