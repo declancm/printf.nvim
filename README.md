@@ -53,7 +53,17 @@ require('printf').setup({
         -- Automatically dereference supported pointer types
         dereference_pointers = false,
         -- Format char * variables as strings
+    },
         char_ptr_strings = true,
+    -- print_line specific options
+    print_line = {
+        -- The variable/identifier/macro with the line number integer value
+        variable = '__LINE__',
+    },
+    -- print_func specific options
+    print_func = {
+        -- The variable/identifier/macro with the function name string
+        variable = '__func__',
     },
 })
 ```
@@ -117,4 +127,20 @@ require('printf').setup({
 
 ```c
 fprintf(stderr, "example: %d\n", example); // auto-generated printf
+```
+
+### Pretty Function
+
+**Config:**
+
+```lua
+require('printf').setup({
+    print_func = { variable = '__PRETTY_FUNCTION__' }
+})
+```
+
+**Output:**
+
+```c
+printf("function: %s\n", __PRETTY_FUNCTION__); // auto-generated printf
 ```

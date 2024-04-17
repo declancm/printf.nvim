@@ -11,6 +11,12 @@ local defaults = {
 	print_var = {
 		dereference_pointers = false,
 	},
+	print_line = {
+		variable = '__LINE__',
+	},
+	print_func = {
+		variable = '__func__',
+	},
 }
 
 M.options = {}

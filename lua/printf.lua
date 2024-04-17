@@ -48,7 +48,7 @@ M.print_line = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
 	if ft == 'c' or ft == 'cpp' then
-		generate_print('"line: %d\\n"', '__LINE__')
+		generate_print('"line: %d\\n"', config.options.print_line.variable)
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
 	end
@@ -59,7 +59,7 @@ M.print_func = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
 	if ft == 'c' or ft == 'cpp' then
-		generate_print('"function: %d\\n"', '__func__')
+		generate_print('"function: %s\\n"', config.options.print_func.variable)
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
 	end
