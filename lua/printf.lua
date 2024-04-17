@@ -3,74 +3,83 @@ local M = {}
 -- TODO: Add telescope picker to search for variable names in current file and generate the print line under the cursor?
 
 local utils = require('printf.utils')
+local config = require('printf.config')
 
 local autogen_signature = 'auto-generated printf'
 
---- printf function options.
---- @class PrintfOptions
---- @field below boolean
+--- Setup the plugin.
+M.setup = function(user_config)
+	config.setup(user_config)
 
---- @type PrintfOptions
-local default_options = {
-	below = true
-}
-
---- @param options PrintfOptions|nil
---- @return PrintfOptions
-local extend_options = function(options)
-	if options then
-		return vim.tbl_deep_extend('keep', options, default_options)
+	if config.options.keymaps.defaults then
+		vim.api.nvim_set_keymap('n', '<leader>dv', '', { callback = M.print_var })
+		vim.api.nvim_set_keymap('n', '<leader>dl', '', { callback = M.print_line })
+		vim.api.nvim_set_keymap('n', '<leader>df', '', { callback = M.print_func })
+		vim.api.nvim_set_keymap('n', '<leader>dc', '', { callback = M.clean })
 	end
-	return default_options
+end
+
+--- Generate the print statement.
+--- @param format string
+--- @param value string
+local function generate_print(format, value)
+	-- Construct the argument list.
+	local args = {}
+	for _, v in ipairs(config.options.called_function.additional_args.left) do
+		table.insert(args, v)
+	end
+	table.insert(args, format)
+	table.insert(args, value)
+	for _, v in ipairs(config.options.called_function.additional_args.right) do
+		table.insert(args, v)
+	end
+
+	-- Generate the function call and arguments.
+	local name = config.options.called_function.name
+	local line = name .. '(' .. table.concat(args, ', ') .. ');'
+
+	-- Append the signature comment.
+	line = line .. ' // ' .. autogen_signature
+
+	utils.insert_line(line)
 end
 
 --- Generate a printf() function call which prints the line number.
---- @param opts PrintfOptions|nil
-M.print_line = function(opts)
-	opts = extend_options(opts)
-	local file_type = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-	local text
+M.print_line = function()
+	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
-	if file_type == 'c' then
-		text = 'printf("line: %d\\n", __LINE__); // ' .. autogen_signature
+	if ft == 'c' or ft == 'cpp' then
+		generate_print('"line: %d\\n"', '__LINE__')
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
-		return
 	end
-
-	utils.insert_line(text, opts.below)
 end
 
 --- Generate a printf() function call which prints the function name.
---- @param opts PrintfOptions|nil
-M.print_func = function(opts)
-	opts = extend_options(opts)
-	local file_type = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-	local text
+M.print_func = function()
+	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
-	if file_type == 'c' then
-		text = 'printf("func: %s\\n", __func__); // ' .. autogen_signature
+	if ft == 'c' or ft == 'cpp' then
+		generate_print('"function: %d\\n"', '__func__')
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
-		return
 	end
-
-	utils.insert_line(text, opts.below)
 end
 
 --- Generate a printf() function call which prints the value of the variable under the cursor.
---- @param opts PrintfOptions|nil
-M.print_var = function(opts)
-	opts = extend_options(opts)
-	local filetype = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-	local text
+M.print_var = function()
+	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
-	if not require('nvim-treesitter.parsers').has_parser() then
-		vim.notify('A tree-sitter parser is required', vim.log.levels.ERROR)
+	local ok, parsers = pcall(require, 'nvim-treesitter.parsers')
+	if not ok then
+		vim.notify('The nvim-treesitter plugin is required', vim.log.levels.ERROR)
+		return
+	elseif not parsers.has_parser() then
+		vim.notify('This file type is missing a tree-sitter parser', vim.log.levels.ERROR)
 		return
 	end
 
-	if filetype == 'c' or filetype == 'cpp' then
+	if ft == 'c' or ft == 'cpp' then
 		local name = require('printf.name').get_var_qualified_name()
 		if not name then
 			vim.notify('A valid variable name was not found', vim.log.levels.WARN)
@@ -83,19 +92,19 @@ M.print_var = function(opts)
 			return
 		end
 
-		local format, cast = require('printf.format').get_type_format_specifier(type)
+		local format, cast = require('printf.format').get_format_specifier(type)
 		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
 			vim.notify('The variable type is not supported', vim.log.levels.WARN)
 			return
 		end
-		text = 'printf("' .. name .. ': %' .. format .. '\\n", ' .. (cast or '') .. name .. '); // ' .. autogen_signature
+
+		local format_string = '"' .. name .. ': %' .. format .. '\\n"'
+		local value = (cast or '') .. name
+		generate_print(format_string, value)
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
-		return
 	end
-
-	utils.insert_line(text, opts.below)
 end
 
 --- Delete all generated lines in the current file by searching for the signature.

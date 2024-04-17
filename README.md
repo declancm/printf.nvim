@@ -13,9 +13,11 @@
 - Can instantly remove all generated print statements
 - Syntax and context aware - doesn't just use the word under the cursor to print a variable
 - Automatically inserts format specifiers for all standard C types
+- Customizable function call (see the Examples section for inspiration)
 
 ## Requirements
 
+- Neovim >= 0.8.0
 - A tree-sitter parser for C
 - The clangd language server
 
@@ -30,19 +32,50 @@
 }
 ```
 
-## Usage
+## Configuration
 
 ```lua
-local printf = require('printf')
-vim.keymap.set('n', '<leader>dv', printf.print_var, {})  -- Print the variable under the cursor
-vim.keymap.set('n', '<leader>dl', printf.print_line, {}) -- Print the line number
-vim.keymap.set('n', '<leader>df', printf.print_func, {}) -- Print the enclosed function name
-vim.keymap.set('n', '<leader>dc', printf.clean, {})      -- Remove all the generated statements
+require('printf').setup({
+    keymaps = {
+        defaults = true,                -- Enable the default keymaps (see the Usage section for more details)
+    },
+    called_function = {
+        name = 'printf',                -- Name of the called function
+        additional_args = {
+            left = {},                  -- Add additional arguments to the left of the format string
+            right = {},                 -- Add additional arguments to the right of the format string
+        },
+    },
+    print_var = {
+        dereference_pointers = false,   -- Automatically dereference supported pointer types (excludes arrays, char * and void *)
+        char_ptr_strings = true,        -- Format char * variables as strings
+    },
+})
+```
+
+## Usage
+
+### Default Keymaps
+
+#### Normal Mode
+
+- **\<leader\>dv** - Print the variable under the cursor
+- **\<leader\>dl** - Print the line number
+- **\<leader\>df** - Print the enclosed function name
+- **\<leader\>dc** - Remove all the generated statements
+
+### Lua API
+
+```lua
+require('printf').print_var()   -- Print the variable under the cursor
+require('printf').print_line()  -- Print the line number
+require('printf').print_func()  -- Print the enclosed function name
+require('printf').clean()       -- Remove all the generated statements
 ```
 
 ## Examples
 
-### Minimal C Setup
+### Minimal Neovim Config
 
 ```lua
 -- Install plugins
@@ -53,15 +86,24 @@ require('lazy').setup({
 })
 
 -- Make sure the tree-sitter parser for c is installed
-require('nvim-treesitter.configs').setup({ ensure_installed = { 'c' } })
+require('nvim-treesitter.configs').setup({ ensure_installed = { 'c', 'cpp' } })
 
 -- Setup the clangd language server
 require('lspconfig').clangd.setup({})
 
--- Setup printf keymaps
-local printf = require('printf')
-vim.keymap.set('n', '<leader>dv', printf.print_var, {})
-vim.keymap.set('n', '<leader>dl', printf.print_line, {})
-vim.keymap.set('n', '<leader>df', printf.print_fun, {})
-vim.keymap.set('n', '<leader>dc', printf.clean, {})
+-- Setup printf.
+require('printf').setup()
+```
+
+### stderr
+
+```lua
+require('printf').setup({
+    called_function = {
+        name = 'fprintf',
+        additional_args = {
+            left = { 'stderrr' }
+        }
+    }
+})
 ```

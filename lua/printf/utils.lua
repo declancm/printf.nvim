@@ -15,12 +15,8 @@ end
 
 --- Insert the text in a new line with the current line indent.
 --- @param text string
---- @param below boolean
-M.insert_line = function(text, below)
+M.insert_line = function(text)
 	local row = vim.api.nvim_win_get_cursor(0)[1]
-	if not below then
-		row = row - 1
-	end
 
 	-- TODO: Use treesitter to get the correct indentation.
 	local indent = vim.api.nvim_get_current_line():match('^(%s*)')

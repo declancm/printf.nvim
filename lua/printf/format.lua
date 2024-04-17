@@ -1,10 +1,12 @@
 local M = {}
 
+local config = require('printf.config')
+
 --- Get the C language format specifier for the provided type.
 --- @param type string
 --- @return string|nil
 --- @return string|nil
-M.get_type_format_specifier = function(type)
+M.get_format_specifier = function(type)
 	if not type then
 		return nil
 	end
@@ -18,7 +20,9 @@ M.get_type_format_specifier = function(type)
 	-- Return the format specifier.
 	if type == '_Bool' or type == 'bool' then
 		return 'd'
-	elseif type:match('^char%[%d+%]$') or type == 'char *' then
+	elseif type:match('^char%[%d+%]$') then
+		return 's'
+	elseif type == 'char *' and config.options.print_var.char_ptr_strings then
 		return 's'
 	elseif type == 'size_t' then
 		return 'zu'
@@ -32,7 +36,9 @@ M.get_type_format_specifier = function(type)
 	elseif type == 'uinptr_t' then
 		return '" PRIuPTR "'
 	elseif type:match(' %*$') then
-		return 'q', '(void *)'
+		return 'p', '(void *)'
+	elseif type:match('%[%d+%]$') then
+		return 'p', '(void *)'
 	else
 		-- Check if signed or unsigned.
 		local count
