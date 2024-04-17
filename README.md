@@ -53,8 +53,8 @@ require('printf').setup({
         -- Automatically dereference supported pointer types
         dereference_pointers = false,
         -- Format char * variables as strings
-    },
         char_ptr_strings = true,
+    },
     -- print_line specific options
     print_line = {
         -- The variable/identifier/macro with the line number integer value

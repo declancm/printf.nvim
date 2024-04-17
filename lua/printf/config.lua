@@ -10,6 +10,7 @@ local defaults = {
 	},
 	print_var = {
 		dereference_pointers = false,
+		char_ptr_strings = true,
 	},
 	print_line = {
 		variable = '__LINE__',
