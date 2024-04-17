@@ -1,7 +1,5 @@
 local M = {}
 
-local utils = require('printf.utils')
-
 --- Get the qualified name of the variable under the cursor.
 --- @return string|nil
 M.get_var_qualified_name = function()
@@ -9,14 +7,14 @@ M.get_var_qualified_name = function()
 
 	-- Check if the cursor is starting on a variable.
 	local node = vim.treesitter.get_node()
-	if not node or not utils.contains(types, node:type()) then
+	if not node or not vim.tbl_contains(types, node:type()) then
 		return nil
 	end
 
 	-- Traverse the parent nodes until the parent is no longer part of the variable.
 	local parent = node:parent()
 	while parent do
-		if not utils.contains(types, parent:type()) then
+		if not vim.tbl_contains(types, parent:type()) then
 			break
 		end
 

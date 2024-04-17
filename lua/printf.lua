@@ -2,7 +2,6 @@ local M = {}
 
 -- TODO: Add telescope picker to search for variable names in current file and generate the print line under the cursor?
 
-local utils = require('printf.utils')
 local config = require('printf.config')
 
 local autogen_signature = 'auto-generated printf'
@@ -35,7 +34,13 @@ local function generate_print(format, value)
 	-- Append the signature comment.
 	line = line .. ' // ' .. autogen_signature
 
-	utils.insert_line(line)
+	-- Prepend the indent.
+	local indent = vim.api.nvim_get_current_line():match('^(%s*)')
+	line = indent .. line
+
+	-- Insert the new line.
+	local row = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, row, row, false, { line })
 end
 
 --- Generate a printf() function call which prints the line number.
