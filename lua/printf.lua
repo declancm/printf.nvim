@@ -24,15 +24,9 @@ end
 --- @param value string
 local function generate_print(format, value)
 	-- Construct the argument list.
-	local args = {}
-	for _, v in ipairs(config.options.called_function.additional_args.left) do
-		table.insert(args, v)
-	end
+	local args = vim.deepcopy(config.options.called_function.additional_args)
 	table.insert(args, format)
 	table.insert(args, value)
-	for _, v in ipairs(config.options.called_function.additional_args.right) do
-		table.insert(args, v)
-	end
 
 	-- Generate the function call and arguments.
 	local name = config.options.called_function.name

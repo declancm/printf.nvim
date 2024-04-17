@@ -36,19 +36,24 @@
 
 ```lua
 require('printf').setup({
+    -- Keymap options
     keymaps = {
-        defaults = true,                -- Enable the default keymaps (see the Usage section for more details)
+        -- Enable the default keymaps
+        defaults = true,
     },
+    -- Generated function call options
     called_function = {
-        name = 'printf',                -- Name of the called function
-        additional_args = {
-            left = {},                  -- Add additional arguments to the left of the format string
-            right = {},                 -- Add additional arguments to the right of the format string
-        },
+        -- Name of the called function
+        name = 'printf',
+        -- Add additional arguments before the format string
+        additional_args = {},
     },
+    -- print_var specific options
     print_var = {
-        dereference_pointers = false,   -- Automatically dereference supported pointer types (excludes arrays, char * and void *)
-        char_ptr_strings = true,        -- Format char * variables as strings
+        -- Automatically dereference supported pointer types
+        dereference_pointers = false,
+        -- Format char * variables as strings
+        char_ptr_strings = true,
     },
 })
 ```
@@ -103,9 +108,7 @@ require('printf').setup()
 require('printf').setup({
     called_function = {
         name = 'fprintf',
-        additional_args = {
-            left = { 'stderr' }
-        }
+        additional_args = { 'stderr' }
     }
 })
 ```
