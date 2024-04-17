@@ -102,7 +102,7 @@ require('printf').setup({
     called_function = {
         name = 'fprintf',
         additional_args = {
-            left = { 'stderrr' }
+            left = { 'stderr' }
         }
     }
 })
