@@ -95,7 +95,9 @@ require('lspconfig').clangd.setup({})
 require('printf').setup()
 ```
 
-### stderr
+### Standard Error Stream
+
+**Config:**
 
 ```lua
 require('printf').setup({
@@ -106,4 +108,10 @@ require('printf').setup({
         }
     }
 })
+```
+
+**Output:**
+
+```c
+fprintf(stderr, "example: %d\n", example); // auto-generated printf
 ```
