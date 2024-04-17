@@ -6,10 +6,7 @@ local defaults = {
 	},
 	called_function = {
 		name = 'printf',
-		additional_args = {
-			left = {},
-			right = {},
-		},
+		additional_args = {},
 	},
 	print_var = {
 		dereference_pointers = false,
