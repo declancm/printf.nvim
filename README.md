@@ -34,6 +34,26 @@
 }
 ```
 
+## Usage
+
+### Default Keymaps
+
+#### Normal Mode
+
+- **\<leader\>dv** - Print the variable under the cursor
+- **\<leader\>dl** - Print the line number
+- **\<leader\>df** - Print the enclosed function name
+- **\<leader\>dc** - Remove all the generated statements
+
+### Lua API
+
+```lua
+require('printf').print_var()   -- Print the variable under the cursor
+require('printf').print_line()  -- Print the line number
+require('printf').print_func()  -- Print the enclosed function name
+require('printf').clean()       -- Remove all the generated statements
+```
+
 ## Configuration
 
 ```lua
@@ -68,26 +88,6 @@ require('printf').setup({
         variable = '__func__',
     },
 })
-```
-
-## Usage
-
-### Default Keymaps
-
-#### Normal Mode
-
-- **\<leader\>dv** - Print the variable under the cursor
-- **\<leader\>dl** - Print the line number
-- **\<leader\>df** - Print the enclosed function name
-- **\<leader\>dc** - Remove all the generated statements
-
-### Lua API
-
-```lua
-require('printf').print_var()   -- Print the variable under the cursor
-require('printf').print_line()  -- Print the line number
-require('printf').print_func()  -- Print the enclosed function name
-require('printf').clean()       -- Remove all the generated statements
 ```
 
 ## Examples
