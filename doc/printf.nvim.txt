@@ -11,8 +11,6 @@ Table of Contents                              *printf.nvim-table-of-contents*
   - Examples                                            |printf.nvim-examples|
 1. Links                                                   |printf.nvim-links|
 
-_Note: This project is a work-in-progress - please expect breaking changes!_
-
 
 FEATURES                                                *printf.nvim-features*
 
