@@ -91,7 +91,7 @@ M.print_var = function()
 			return
 		end
 
-		local format, cast = require('printf.format').get_format_specifier(type)
+		local format, operators = require('printf.format').get_format_specifier(type)
 		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
 			vim.notify('The variable type is not supported', vim.log.levels.WARN)
@@ -99,7 +99,7 @@ M.print_var = function()
 		end
 
 		local format_string = '"' .. name .. ': %' .. format .. '\\n"'
-		local value = (cast or '') .. name
+		local value = (operators.left or '') .. name .. (operators.right or '')
 		generate_print(format_string, value)
 	else
 		vim.notify('This file type is not supported', vim.log.levels.WARN)
