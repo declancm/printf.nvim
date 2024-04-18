@@ -54,6 +54,14 @@ require('printf').print_func()  -- Print the enclosed function name
 require('printf').clean()       -- Remove all the generated statements
 ```
 
+<!-- panvimdoc-ignore-start -->
+
+### Help
+
+Help docs can be accessed with `:help printf.nvim`
+
+<!-- panvimdoc-ignore-end -->
+
 ## Configuration
 
 ```lua
