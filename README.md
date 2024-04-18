@@ -5,8 +5,6 @@
 
 ![printf.nvim](assets/printf_demo.gif "print_var demo")
 
-*Note: This project is a work-in-progress - please expect breaking changes!*
-
 ## Features
 
 - Generates print statements for:
