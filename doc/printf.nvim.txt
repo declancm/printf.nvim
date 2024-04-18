@@ -1,4 +1,4 @@
-*printf.nvim.txt*        For Neovim >= 0.8.0        Last change: 2024 April 17
+*printf.nvim.txt*        For Neovim >= 0.8.0        Last change: 2024 April 18
 
 ==============================================================================
 Table of Contents                              *printf.nvim-table-of-contents*
@@ -6,8 +6,8 @@ Table of Contents                              *printf.nvim-table-of-contents*
   - Features                                            |printf.nvim-features|
   - Requirements                                    |printf.nvim-requirements|
   - Installation                                    |printf.nvim-installation|
-  - Configuration                                  |printf.nvim-configuration|
   - Usage                                                  |printf.nvim-usage|
+  - Configuration                                  |printf.nvim-configuration|
   - Examples                                            |printf.nvim-examples|
 1. Links                                                   |printf.nvim-links|
 
@@ -45,6 +45,30 @@ LAZY.NVIM ~
 <
 
 
+USAGE                                                      *printf.nvim-usage*
+
+
+DEFAULT KEYMAPS ~
+
+
+NORMAL MODE
+
+- **<leader>dv** - Print the variable under the cursor
+- **<leader>dl** - Print the line number
+- **<leader>df** - Print the enclosed function name
+- **<leader>dc** - Remove all the generated statements
+
+
+LUA API ~
+
+>lua
+    require('printf').print_var()   -- Print the variable under the cursor
+    require('printf').print_line()  -- Print the line number
+    require('printf').print_func()  -- Print the enclosed function name
+    require('printf').clean()       -- Remove all the generated statements
+<
+
+
 CONFIGURATION                                      *printf.nvim-configuration*
 
 >lua
@@ -79,30 +103,6 @@ CONFIGURATION                                      *printf.nvim-configuration*
             variable = '__func__',
         },
     })
-<
-
-
-USAGE                                                      *printf.nvim-usage*
-
-
-DEFAULT KEYMAPS ~
-
-
-NORMAL MODE
-
-- **<leader>dv** - Print the variable under the cursor
-- **<leader>dl** - Print the line number
-- **<leader>df** - Print the enclosed function name
-- **<leader>dc** - Remove all the generated statements
-
-
-LUA API ~
-
->lua
-    require('printf').print_var()   -- Print the variable under the cursor
-    require('printf').print_line()  -- Print the line number
-    require('printf').print_func()  -- Print the enclosed function name
-    require('printf').clean()       -- Remove all the generated statements
 <
 
 
