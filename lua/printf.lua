@@ -11,10 +11,10 @@ M.setup = function(user_config)
 	config.setup(user_config)
 
 	if config.options.keymaps.defaults then
-		vim.api.nvim_set_keymap('n', '<leader>dv', '', { callback = M.print_var })
-		vim.api.nvim_set_keymap('n', '<leader>dl', '', { callback = M.print_line })
-		vim.api.nvim_set_keymap('n', '<leader>df', '', { callback = M.print_func })
-		vim.api.nvim_set_keymap('n', '<leader>dc', '', { callback = M.clean })
+		vim.api.nvim_set_keymap('n', '<leader>dv', '', { callback = M.print_var, desc = 'Debug print variable.' })
+		vim.api.nvim_set_keymap('n', '<leader>dl', '', { callback = M.print_line, desc = 'Debug print line number.' })
+		vim.api.nvim_set_keymap('n', '<leader>df', '', { callback = M.print_func, desc = 'Debug print function name.' })
+		vim.api.nvim_set_keymap('n', '<leader>dc', '', { callback = M.clean, desc = 'Debug print cleanup.' })
 	end
 end
 
