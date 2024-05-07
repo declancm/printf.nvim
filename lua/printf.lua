@@ -16,6 +16,15 @@ M.setup = function(user_config)
 		vim.api.nvim_set_keymap('n', '<leader>df', '', { callback = M.print_func, desc = 'Debug print function name.' })
 		vim.api.nvim_set_keymap('n', '<leader>dc', '', { callback = M.clean, desc = 'Debug print cleanup.' })
 	end
+
+	vim.api.nvim_create_user_command('Printf', function(arg)
+		local function_name = arg.args
+		if type(M[function_name]) == 'function' then
+			M[function_name]()
+		else
+			vim.notify('Not a valid command', vim.log.levels.WARN)
+		end
+	end, { nargs = 1 })
 end
 
 --- Generate the print statement.

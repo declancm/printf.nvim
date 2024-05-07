@@ -34,15 +34,6 @@
 
 ## Usage
 
-### Default Keymaps
-
-#### Normal Mode
-
-- **\<leader\>dv** - Print the variable under the cursor
-- **\<leader\>dl** - Print the line number
-- **\<leader\>df** - Print the enclosed function name
-- **\<leader\>dc** - Remove all the generated statements
-
 ### Lua API
 
 ```lua
@@ -51,6 +42,26 @@ require('printf').print_line()  -- Print the line number
 require('printf').print_func()  -- Print the enclosed function name
 require('printf').clean()       -- Remove all the generated statements
 ```
+
+### Vim Commands
+
+The `Printf` command is used to access the Lua API as Vim commands
+
+```vim
+:Printf print_var
+:Printf print_line
+:Printf print_func
+:Printf clean
+```
+
+### Default Keymaps
+
+#### Normal Mode
+
+- **\<leader\>dv** - Print the variable under the cursor
+- **\<leader\>dl** - Print the current line number
+- **\<leader\>df** - Print the name of the enclosed function
+- **\<leader\>dc** - Cleanup all the generated print statements
 
 <!-- panvimdoc-ignore-start -->
 
