@@ -45,7 +45,7 @@ local function generate_print(format, value)
 	vim.api.nvim_buf_set_lines(0, row, row, false, { line })
 end
 
---- Generate a printf() function call which prints the line number.
+--- Generate a print statement which prints the line number.
 M.print_line = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
@@ -56,7 +56,7 @@ M.print_line = function()
 	end
 end
 
---- Generate a printf() function call which prints the function name.
+--- Generate a print statement which prints the name of the enclosed function.
 M.print_func = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
@@ -67,7 +67,7 @@ M.print_func = function()
 	end
 end
 
---- Generate a printf() function call which prints the value of the variable under the cursor.
+--- Generate a print statement which prints the value of the variable under the cursor.
 M.print_var = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
 
@@ -108,7 +108,7 @@ M.print_var = function()
 	end
 end
 
---- Delete all generated lines in the current file by searching for the signature.
+--- Delete all generated print statements in the current file by searching for the signature.
 M.clean = function()
 	local line_count = vim.api.nvim_buf_line_count(0)
 	local escaped_signature = autogen_signature:gsub('%-', '%%-')
