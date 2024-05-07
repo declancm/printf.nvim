@@ -54,6 +54,26 @@ The `Printf` command can be used to access the Lua API as Vim commands
 :Printf clean          " equivalent to `:lua require('printf').clean()`
 ```
 
+### Example Keymaps
+
+#### Lua
+
+```lua
+vim.keymap.set('n', '<leader>dv', require('printf').print_var, {})
+vim.keymap.set('n', '<leader>dl', require('printf').print_line, {})
+vim.keymap.set('n', '<leader>df', require('printf').print_func, {})
+vim.keymap.set('n', '<leader>dc', require('printf').clean, {})
+```
+
+#### VimL
+
+```viml
+nnoremap <leader>dv <cmd>Printf print_var<cr>
+nnoremap <leader>dl <cmd>Printf print_line<cr>
+nnoremap <leader>df <cmd>Printf print_func<cr>
+nnoremap <leader>dc <cmd>Printf clean<cr>
+```
+
 <!-- panvimdoc-ignore-start -->
 
 ### Help
