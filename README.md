@@ -119,13 +119,13 @@ require('lazy').setup({
     'declancm/printf.nvim'
 })
 
--- Make sure the tree-sitter parser for c is installed
-require('nvim-treesitter.configs').setup({ ensure_installed = { 'c', 'cpp' } })
+-- Setup nvim-treesitter
+require('nvim-treesitter.configs').setup()
 
 -- Setup the clangd language server
 require('lspconfig').clangd.setup({})
 
--- Setup printf.
+-- Setup printf
 require('printf').setup()
 ```
 
