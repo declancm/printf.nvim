@@ -58,7 +58,7 @@ LUA API ~
 
 VIM COMMANDS ~
 
-The `Printf` command is used to access the Lua API as Vim commands
+The `Printf` command can be used to access the Lua API as Vim commands
 
 >viml
     :Printf print_var      " equivalent to `:lua require('printf').print_var()`
@@ -68,26 +68,10 @@ The `Printf` command is used to access the Lua API as Vim commands
 <
 
 
-DEFAULT KEYMAPS ~
-
-
-NORMAL MODE
-
-- **<leader>dv** - Print the variable under the cursor
-- **<leader>dl** - Print the current line number
-- **<leader>df** - Print the name of the enclosed function
-- **<leader>dc** - Cleanup generated print statements
-
-
 CONFIGURATION                                      *printf.nvim-configuration*
 
 >lua
     require('printf').setup({
-        -- Keymap options
-        keymaps = {
-            -- Enable the default keymaps
-            defaults = true,
-        },
         -- Generated function call options
         called_function = {
             -- Name of the called function
