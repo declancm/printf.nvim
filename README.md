@@ -48,10 +48,10 @@ require('printf').clean()       -- Cleanup generated statements
 The `Printf` command is used to access the Lua API as Vim commands
 
 ```viml
-:Printf print_var      # equivalent to require('printf').print_var()
-:Printf print_line     # equivalent to require('printf').print_line()
-:Printf print_func     # equivalent to require('printf').print_func()
-:Printf clean          # equivalent to require('printf').clean()
+:Printf print_var      " equivalent to require('printf').print_var()
+:Printf print_line     " equivalent to require('printf').print_line()
+:Printf print_func     " equivalent to require('printf').print_func()
+:Printf clean          " equivalent to require('printf').clean()
 ```
 
 ### Default Keymaps
