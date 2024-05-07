@@ -1,9 +1,6 @@
 local M = {}
 
 local defaults = {
-	keymaps = {
-		defaults = true,
-	},
 	called_function = {
 		name = 'printf',
 		additional_args = {},

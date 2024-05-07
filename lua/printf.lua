@@ -10,13 +10,6 @@ local autogen_signature = 'auto-generated printf'
 M.setup = function(user_config)
 	config.setup(user_config)
 
-	if config.options.keymaps.defaults then
-		vim.api.nvim_set_keymap('n', '<leader>dv', '', { callback = M.print_var, desc = 'Debug print variable.' })
-		vim.api.nvim_set_keymap('n', '<leader>dl', '', { callback = M.print_line, desc = 'Debug print line number.' })
-		vim.api.nvim_set_keymap('n', '<leader>df', '', { callback = M.print_func, desc = 'Debug print function name.' })
-		vim.api.nvim_set_keymap('n', '<leader>dc', '', { callback = M.clean, desc = 'Debug print cleanup.' })
-	end
-
 	vim.api.nvim_create_user_command('Printf', function(arg)
 		local function_name = arg.args
 		if type(M[function_name]) == 'function' then

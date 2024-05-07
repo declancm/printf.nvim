@@ -45,7 +45,7 @@ require('printf').clean()       -- Cleanup generated statements
 
 ### Vim Commands
 
-The `Printf` command is used to access the Lua API as Vim commands
+The `Printf` command can be used to access the Lua API as Vim commands
 
 ```viml
 :Printf print_var      " equivalent to `:lua require('printf').print_var()`
@@ -53,15 +53,6 @@ The `Printf` command is used to access the Lua API as Vim commands
 :Printf print_func     " equivalent to `:lua require('printf').print_func()`
 :Printf clean          " equivalent to `:lua require('printf').clean()`
 ```
-
-### Default Keymaps
-
-#### Normal Mode
-
-- **\<leader\>dv** - Print the variable under the cursor
-- **\<leader\>dl** - Print the current line number
-- **\<leader\>df** - Print the name of the enclosed function
-- **\<leader\>dc** - Cleanup generated print statements
 
 <!-- panvimdoc-ignore-start -->
 
@@ -75,11 +66,6 @@ Help docs can be accessed with `:help printf.nvim`
 
 ```lua
 require('printf').setup({
-    -- Keymap options
-    keymaps = {
-        -- Enable the default keymaps
-        defaults = true,
-    },
     -- Generated function call options
     called_function = {
         -- Name of the called function
