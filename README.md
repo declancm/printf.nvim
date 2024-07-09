@@ -27,8 +27,7 @@
 
 ```lua
 {
-    'declancm/printf.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    'declancm/printf.nvim'
 }
 ```
 
@@ -121,12 +120,8 @@ require('printf').setup({
 -- Install plugins
 require('lazy').setup({
     'neovim/nvim-lspconfig',
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
     'declancm/printf.nvim'
 })
-
--- Setup nvim-treesitter
-require('nvim-treesitter.configs').setup()
 
 -- Setup the clangd language server
 require('lspconfig').clangd.setup({})

@@ -1,8 +1,8 @@
+local config = require('printf.config')
+local utils = require('printf.utils')
 local M = {}
 
 -- TODO: Add telescope picker to search for variable names in current file and generate the print line under the cursor?
-
-local config = require('printf.config')
 
 local autogen_signature = 'auto-generated printf'
 
@@ -15,7 +15,7 @@ M.setup = function(user_config)
 		if type(M[function_name]) == 'function' then
 			M[function_name]()
 		else
-			vim.notify('Not a valid command', vim.log.levels.WARN)
+			utils.notify('Not a valid command', 'warn')
 		end
 	end, { nargs = 1 })
 end
@@ -52,7 +52,7 @@ M.print_line = function()
 	if ft == 'c' or ft == 'cpp' then
 		generate_print('"line: %d\\n"', config.options.print_line.variable)
 	else
-		vim.notify('This file type is not supported', vim.log.levels.WARN)
+		utils.notify('This file type is not supported', 'warn')
 	end
 end
 
@@ -63,40 +63,35 @@ M.print_func = function()
 	if ft == 'c' or ft == 'cpp' then
 		generate_print('"function: %s\\n"', config.options.print_func.variable)
 	else
-		vim.notify('This file type is not supported', vim.log.levels.WARN)
+		utils.notify('This file type is not supported', 'warn')
 	end
 end
 
 --- Generate a print statement which prints the value of the variable under the cursor.
 M.print_var = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-
-	local ok, parsers = pcall(require, 'nvim-treesitter.parsers')
-	if not ok then
-		vim.notify('The nvim-treesitter plugin is required', vim.log.levels.ERROR)
-		return
-	elseif not parsers.has_parser() then
-		vim.notify('This file type is missing a tree-sitter parser', vim.log.levels.ERROR)
+	if #vim.api.nvim_get_runtime_file('parser/' .. ft .. '.so', false) == 0 then
+		utils.notify('The tree-sitter parser for ' .. ft .. ' is not installed', 'warn')
 		return
 	end
 
 	if ft == 'c' or ft == 'cpp' then
 		local name = require('printf.name').get_var_qualified_name()
 		if not name then
-			vim.notify('A valid variable name was not found', vim.log.levels.WARN)
+			utils.notify('A valid variable name was not found', 'warn')
 			return
 		end
 
 		local type = require('printf.type').get_var_type()
 		if not type then
-			vim.notify('Failed to get the variable type', vim.log.levels.ERROR)
+			utils.notify('Failed to get the variable type', 'error')
 			return
 		end
 
 		local format, operators = require('printf.format').get_format_specifier(type)
 		if not format then
 			-- TODO: Move the cursor to manually type in the format when not available or not supported.
-			vim.notify('The variable type is not supported', vim.log.levels.WARN)
+			utils.notify('The variable type is not supported', 'warn')
 			return
 		end
 
@@ -104,7 +99,7 @@ M.print_var = function()
 		local value = (operators.left or '') .. name .. (operators.right or '')
 		generate_print(format_string, value)
 	else
-		vim.notify('This file type is not supported', vim.log.levels.WARN)
+		utils.notify('This file type is not supported', 'warn')
 	end
 end
 
