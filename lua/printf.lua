@@ -70,12 +70,13 @@ end
 --- Generate a print statement which prints the value of the variable under the cursor.
 M.print_var = function()
 	local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-	if #vim.api.nvim_get_runtime_file('parser/' .. ft .. '.so', false) == 0 then
-		utils.notify('The tree-sitter parser for ' .. ft .. ' is not installed', 'warn')
-		return
-	end
 
 	if ft == 'c' or ft == 'cpp' then
+		if not utils.treesitter_parser_exists(ft) then
+			utils.notify('The tree-sitter parser for ' .. ft .. ' is not installed', 'warn')
+			return
+		end
+
 		local name = require('printf.name').get_var_qualified_name()
 		if not name then
 			utils.notify('A valid variable name was not found', 'warn')
