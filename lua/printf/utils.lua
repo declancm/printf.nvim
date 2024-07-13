@@ -11,4 +11,10 @@ M.notify = function(message, level, options)
 	notify_fn('[printf.nvim] ' .. message, notify_level)
 end
 
+---@param lang string
+---@return boolean
+M.treesitter_parser_exists = function(lang)
+	return (#vim.api.nvim_get_runtime_file('parser/' .. lang .. '.so', false) ~= 0)
+end
+
 return M
